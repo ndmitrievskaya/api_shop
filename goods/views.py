@@ -1,5 +1,5 @@
 from rest_framework import generics
-from serializers import GoodDetailSerializer
+from .serializers import GoodDetailSerializer
 
 
 class GoodCreateView(generics.CreateAPIView):

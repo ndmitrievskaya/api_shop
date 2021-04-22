@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import Good
+from .models import Good
 
 
 class GoodDetailSerializer(serializers.ModelSerializer):
