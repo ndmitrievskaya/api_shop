@@ -1,26 +1,23 @@
 from rest_framework import serializers
+from rest_framework.fields import SerializerMethodField
+
 from .models import Good, Category
 
 
 class GoodListSerializer(serializers.ModelSerializer):
+    # category = SerializerMethodField('get_limited_number_of_categories')
+    #
+    # def get_limited_number_of_categories(self, obj):
+    #     qs = obj.category.all()
+    #     if len(qs) > 10:
+    #         return ValueError
+
     class Meta:
         model = Good
-        fields = ("id", "name", "category", "price")
-
-
-class GoodDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Good
-        fields = ("id", "name", "category", "price", "is_published", "is_deleted")
-
-
-class CategoryDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
         fields = "__all__"
 
 
 class CategoryListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ("id", "name")
+        fields = "__all__"
