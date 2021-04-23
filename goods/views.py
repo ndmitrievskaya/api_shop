@@ -1,18 +1,33 @@
-from rest_framework import generics, viewsets, status
+from django_filters import RangeFilter
+from rest_framework import generics, viewsets, status, filters
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 
 from .serializers import GoodListSerializer, CategoryListSerializer
 from .models import Good, Category
 
 
-class GoodViewSet(viewsets.ModelViewSet):
-    serializer_class = GoodListSerializer
+class PriceFilter(FilterSet):
+    price = RangeFilter()
+    filterset_fields = ['is_published', 'is_deleted']
 
-    def get_queryset(self):
-        goods = Good.objects.all()
-        return goods
+    class Meta:
+        model = Good
+        fields = ['price', 'is_published', 'is_deleted']
+
+
+class GoodViewSet(viewsets.ModelViewSet):
+    queryset = Good.objects.all()
+    serializer_class = GoodListSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_class = PriceFilter
+    search_fields = ['name']
+    price = RangeFilter()
 
     def destroy(self, request, *args, **kwargs) -> Response:
+        if kwargs['slug']:
+            pass
         good = Good.objects.get(pk=kwargs['pk'])
         good.is_deleted = True
         good.save()
@@ -21,6 +36,8 @@ class GoodViewSet(viewsets.ModelViewSet):
 
 class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategoryListSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
 
     def get_queryset(self):
         categories = Category.objects.all()
@@ -33,3 +50,19 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return Response(
             "Deleting error: You can't delete this category as it's connected with existing goods",
             status=status.HTTP_403_FORBIDDEN)
+
+
+class ListGoodBySlug(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = GoodListSerializer
+
+    def get_object(self):
+        obj = get_object_or_404(Good, slug=self.kwargs['slug'])
+        return obj
+
+
+class ListCategoryBySlug(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CategoryListSerializer
+
+    def get_object(self):
+        obj = get_object_or_404(Category, slug=self.kwargs['slug'])
+        return obj

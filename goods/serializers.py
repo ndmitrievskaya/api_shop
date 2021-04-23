@@ -1,10 +1,10 @@
-from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
 from .models import Good, Category
 
 
 class GoodListSerializer(serializers.ModelSerializer):
+    lookup_field = ['slug', 'id']
 
     def validate_category(self, category):
         if len(category) < 2 or len(category) > 10:
