@@ -10,11 +10,11 @@ from .models import Good, Category
 
 class PriceFilter(FilterSet):
     price = RangeFilter()
-    filterset_fields = ['is_published', 'is_deleted']
+    filterset_fields = ['categories', 'is_published', 'is_deleted']
 
     class Meta:
         model = Good
-        fields = ['price', 'is_published', 'is_deleted']
+        fields = ['price', 'categories', 'is_published', 'is_deleted']
 
 
 class GoodViewSet(viewsets.ModelViewSet):
@@ -37,7 +37,7 @@ class GoodViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategoryListSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name']
+    search_fields = ['name', 'slug']
 
     def get_queryset(self):
         categories = Category.objects.all()
