@@ -26,8 +26,6 @@ class GoodViewSet(viewsets.ModelViewSet):
     price = RangeFilter()
 
     def destroy(self, request, *args, **kwargs) -> Response:
-        if kwargs['slug']:
-            pass
         good = Good.objects.get(pk=kwargs['pk'])
         good.is_deleted = True
         good.save()
