@@ -42,7 +42,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return categories
 
     def destroy(self, request, *args, **kwargs):
-        if not list(Good.objects.filter(category=kwargs['pk'])):
+        if not list(Good.objects.filter(categories=kwargs['pk'])):
             category = Category.objects.get(pk=kwargs['pk'])
             return super(Category, category).destroy(*args, **kwargs)
         return Response(
