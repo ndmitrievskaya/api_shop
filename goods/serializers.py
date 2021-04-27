@@ -4,7 +4,6 @@ from .models import Good, Category
 
 
 class GoodListSerializer(serializers.ModelSerializer):
-
     def validate_categories(self, categories) -> Good.categories:
         if len(categories) < 2 or len(categories) > 10:
             raise serializers.ValidationError(

@@ -7,14 +7,17 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
             name='Category',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id',
+                 models.BigAutoField(auto_created=True,
+                                     primary_key=True,
+                                     serialize=False,
+                                     verbose_name='ID')),
                 ('name', models.CharField(max_length=200, unique=True)),
                 ('slug', models.SlugField(max_length=300, unique=True)),
             ],
@@ -22,18 +25,25 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Good',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id',
+                 models.BigAutoField(auto_created=True,
+                                     primary_key=True,
+                                     serialize=False,
+                                     verbose_name='ID')),
                 ('name', models.CharField(max_length=200)),
                 ('slug', models.SlugField(max_length=300, unique=True)),
                 ('price', models.FloatField()),
                 ('is_published', models.BooleanField(default=False)),
                 ('is_deleted', models.BooleanField(default=False)),
-                ('category', models.ManyToManyField(related_name='goods', to='goods.Category')),
+                ('category',
+                 models.ManyToManyField(related_name='goods',
+                                        to='goods.Category')),
             ],
         ),
         migrations.AddField(
             model_name='category',
             name='category_goods',
-            field=models.ManyToManyField(related_name='goods_of_category', to='goods.Good'),
+            field=models.ManyToManyField(related_name='goods_of_category',
+                                         to='goods.Good'),
         ),
     ]

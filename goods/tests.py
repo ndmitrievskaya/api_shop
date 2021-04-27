@@ -10,16 +10,11 @@ client = Client()
 
 class GetAllGoodsTest(TestCase):
     """ Test module for GET all goods API """
-
     def setUp(self):
-        Good.objects.create(
-            name='Phone', slug='phone', price=1234)
-        Good.objects.create(
-            name='Microwave', slug='microwave', price=1234)
-        Good.objects.create(
-            name='Бокалы', slug='glasses', price=1234)
-        Good.objects.create(
-            name='Кофта', slug='sweater', price=1234)
+        Good.objects.create(name='Phone', slug='phone', price=1234)
+        Good.objects.create(name='Microwave', slug='microwave', price=1234)
+        Good.objects.create(name='Бокалы', slug='glasses', price=1234)
+        Good.objects.create(name='Кофта', slug='sweater', price=1234)
 
     def test_get_all_goods(self):
         response = client.get(reverse('good-list'))
@@ -29,8 +24,7 @@ class GetAllGoodsTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_good_by_slug(self):
-        response = client.get(
-            reverse('good_slug', kwargs={'slug': 'phone'}))
+        response = client.get(reverse('good_slug', kwargs={'slug': 'phone'}))
         good = Good.objects.get(slug='bath')
         serializer = CategoryListSerializer(good)
         self.assertEqual(response.data, serializer.data)
@@ -39,12 +33,9 @@ class GetAllGoodsTest(TestCase):
 
 class GetAllCategoriesTest(TestCase):
     def setUp(self):
-        Category.objects.create(
-            name='Bath', slug='bath')
-        Category.objects.create(
-            name='Clothes', slug='clothes')
-        Category.objects.create(
-            name='Electronics', slug='electronics')
+        Category.objects.create(name='Bath', slug='bath')
+        Category.objects.create(name='Clothes', slug='clothes')
+        Category.objects.create(name='Electronics', slug='electronics')
 
     def test_get_all_categories(self):
         response = client.get(reverse('category-list'))
@@ -61,8 +52,8 @@ class GetAllCategoriesTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_category_by_slug(self):
-        response = client.get(
-            reverse('category_slug', kwargs={'slug': 'bath'}))
+        response = client.get(reverse('category_slug', kwargs={'slug':
+                                                               'bath'}))
         category = Category.objects.get(slug='bath')
         serializer = CategoryListSerializer(category)
         self.assertEqual(response.data, serializer.data)

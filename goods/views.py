@@ -64,4 +64,3 @@ class ListCategoryBySlug(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         obj = get_object_or_404(Category, slug=self.kwargs['slug'])
         return obj
-
