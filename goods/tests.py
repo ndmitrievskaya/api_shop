@@ -25,8 +25,8 @@ class GetAllGoodsTest(TestCase):
 
     def test_get_good_by_slug(self):
         response = client.get(reverse('good_slug', kwargs={'slug': 'phone'}))
-        good = Good.objects.get(slug='bath')
-        serializer = CategoryListSerializer(good)
+        good = Good.objects.get(slug='phone')
+        serializer = GoodListSerializer(good)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 

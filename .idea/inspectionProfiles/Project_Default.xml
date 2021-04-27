@@ -44,6 +44,7 @@
           <option value="typing.Generator.add" />
           <option value="typing.Generator.commit" />
           <option value="url_monitor.db.init_app" />
+          <option value="goods.models.Good.*" />
         </list>
       </option>
     </inspection_tool>
