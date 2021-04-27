@@ -9,7 +9,7 @@ You may clone the repository and run it on your local machine.
 
 ### Installing
 
-After cloning the repository you should install requirements.
+Make sure you have initialised a virtual env for the project the way you usually do it. After that you can safely install all the necessary dependencies via
 
 ```
 pip install -r requirements.txt
